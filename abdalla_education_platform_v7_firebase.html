@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>منصة عبدالله التعليمية - لوحة المدير</title>
+<style>
+:root{--bg:#0b1020;--p:#121b31;--p2:#192743;--t:#f4f7ff;--m:#9eabc6;--b:#5b8cff;--c:#35d4d0;--l:#2a3958}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#1b2b50,transparent 35%),var(--bg);color:var(--t);font:15px Tahoma,Arial}main{max-width:1100px;margin:auto;padding:16px}.top,.head,.line,.actions{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{display:flex;align-items:center;gap:12px}.logo{background:linear-gradient(130deg,var(--b),var(--c));color:#071225;border-radius:14px;padding:13px;font-weight:bold;font-size:20px}.muted,small{color:var(--m)}h1{font-size:18px;margin:0 0 5px}button,input,textarea,select{font:inherit}.btn{background:var(--p);color:var(--t);border:1px solid var(--l);padding:10px 14px;border-radius:11px;cursor:pointer}.primary{background:linear-gradient(120deg,var(--b),#7167ed);border:0;font-weight:bold}.danger{color:#ff9cab}.hero,.panel,.stat,.course{background:var(--p);border:1px solid var(--l);border-radius:18px;padding:18px}.hero{margin:20px 0;background:linear-gradient(120deg,#1a2d53,#14213a)}.hero h2{font-size:30px;margin:12px 0}.hero p{line-height:1.9;color:#c4cfe3}.stats,.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:15px 0}.stat strong{display:block;font-size:27px;margin-top:8px}.tabs{display:flex;gap:8px;overflow:auto;margin:20px 0}.tab.active{background:#263d68;border-color:var(--b)}.section{display:none}.section.active{display:block}.grid{grid-template-columns:repeat(3,1fr)}.course p{color:var(--m);line-height:1.7;min-height:40px}.course h3{margin:7px 0}.course .actions{margin-top:13px}.field{display:grid;gap:7px;margin:12px 0}.field input,.field textarea,.field select{width:100%;background:#0d1528;color:white;border:1px solid var(--l);border-radius:10px;padding:12px}.field textarea{min-height:80px}.line{padding:13px 0;border-bottom:1px solid var(--l)}.notice{margin-top:18px;padding:14px;border-radius:13px;background:#302916;border:1px solid #66532b;color:#f1d99b;line-height:1.8;font-size:13px}.empty{text-align:center;padding:25px;border:1px dashed #405578;border-radius:14px;color:var(--m)}.modal{display:none;position:fixed;inset:0;background:#050916df;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.box{background:var(--p);border:1px solid #405578;border-radius:18px;padding:20px;width:min(540px,100%);max-height:90vh;overflow:auto}.close{float:left;background:none;border:0;color:white;font-size:24px}.footer{text-align:center;color:var(--m);padding:25px;font-size:12px}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.hero h2{font-size:24px}.top{align-items:flex-start}.top .btn{padding:8px}}
+
+.learn-wrap{display:grid;grid-template-columns:1fr;gap:14px}
+.learn-hero{background:linear-gradient(120deg,#17385a,#192743);border:1px solid #36547e;border-radius:18px;padding:18px}
+.progress-track{height:10px;background:#0b1427;border-radius:20px;overflow:hidden;margin-top:10px}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#35d4d0,#5b8cff);transition:width .2s}
+.lesson-card{background:var(--p);border:1px solid var(--l);border-radius:15px;padding:15px}
+.lesson-card h3{margin:7px 0}
+.lesson-card p{color:var(--m);line-height:1.8}
+.lesson-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.codebox{direction:ltr;text-align:left;white-space:pre-wrap;overflow:auto;background:#07101f;border:1px solid #30415f;border-radius:12px;padding:14px;color:#b9f3e7;font:14px/1.7 Consolas,monospace}
+.lesson-content{line-height:1.95}
+.lesson-content h3{margin:18px 0 8px}
+.task{background:#192b40;border:1px solid #355477;border-radius:12px;padding:14px;line-height:1.9}
+.answer{display:none;background:#102c2b;border:1px solid #28635e;border-radius:12px;padding:12px;margin-top:10px;line-height:1.8}
+.answer.show{display:block}
+.quiz-q{padding:14px 0;border-bottom:1px solid var(--l);line-height:1.9}
+.quiz-q label{display:block;padding:7px 10px;margin:5px 0;background:#0d1528;border:1px solid var(--l);border-radius:9px;cursor:pointer}
+@media(max-width:700px){.lesson-list{grid-template-columns:1fr}}
+
+
+.portal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:15px 0}
+.portal-card{background:var(--p);border:1px solid var(--l);border-radius:16px;padding:16px}
+.portal-card strong{font-size:24px;display:block;margin-top:8px}
+.portal-welcome{background:linear-gradient(120deg,#17385a,#192743);border:1px solid #36547e;border-radius:18px;padding:18px}
+.portal-course{background:#0d1528;border:1px solid var(--l);border-radius:13px;padding:14px;margin:10px 0}
+.portal-course p{color:var(--m);line-height:1.7}
+@media(max-width:700px){.portal-grid{grid-template-columns:1fr}}
+
+
+.auth-shell{max-width:620px;margin:0 auto}
+.auth-card{background:var(--p);border:1px solid var(--l);border-radius:18px;padding:18px;margin:14px 0}
+.auth-status{padding:12px;border-radius:12px;background:#192b40;border:1px solid #355477;line-height:1.8;margin:12px 0}
+.auth-status.warn{background:#302916;border-color:#66532b;color:#f1d99b}
+.auth-status.ok{background:#102c2b;border-color:#28635e;color:#b9f3e7}
+.auth-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+</style>
+<main>
+<header class="top"><div class="brand"><div class="logo">ع</div><div><h1>منصة عبدالله التعليمية</h1><small>لوحة الإدارة والتعلم · Admin & Learning</small></div></div><div class="actions"><button class="btn" onclick="preview()">معاينة</button><button class="btn primary" onclick="info()">حساب المدير</button></div></header>
+<section class="hero"><small style="color:#8fe8e4">مساحة الإدارة والتحكم</small><h2>أهلاً يا عبدالله 👋</h2><p>من هنا تقدر تدير محتوى منصتك وتضيف الكورسات والدروس. التغييرات في هذه النسخة التجريبية تُحفظ على نفس المتصفح والجهاز.</p></section>
+<section class="stats"><div class="stat"><small>الكورسات</small><strong id="cc">0</strong></div><div class="stat"><small>الدروس</small><strong id="lc">0</strong></div><div class="stat"><small>الطلاب</small><strong>—</strong><small>بعد ربط قاعدة البيانات</small></div><div class="stat"><small>الاختبارات</small><strong>1</strong><small>تجريبي</small></div></section>
+<nav class="tabs"><button class="btn tab active" data-tab="courses">📚 الكورسات</button><button class="btn tab" data-tab="lessons">🎬 الدروس</button><button class="btn tab" data-tab="learn">🐍 تعلم Python</button><button class="btn tab" data-tab="portal">🎓 بوابة الطالب</button><button class="btn tab" data-tab="accounts">🔐 الحسابات</button><button class="btn tab" data-tab="students">👨‍🎓 الطلاب</button><button class="btn tab" data-tab="settings">⚙️ الإعدادات</button></nav>
+<section class="section active" id="courses"><div class="head"><h2>إدارة الكورسات</h2><button class="btn primary" onclick="courseForm()">＋ إضافة كورس</button></div><div class="grid" id="courseGrid"></div></section>
+<section class="section" id="lessons"><div class="head"><h2>إدارة الدروس</h2><button class="btn primary" onclick="lessonForm()">＋ إضافة درس</button></div><div class="panel" id="lessonGrid"></div></section>
+<section class="section" id="learn"><div class="learn-wrap"><div class="learn-hero"><small style="color:#8fe8e4">مسار تعليمي كامل</small><h2>🐍 تعلم Python من الصفر</h2><p>من أول أمر print لحد بناء مشروع تطبيقي. ذاكر الدرس، جرّب المثال، وبعدها حل التدريب بنفسك.</p><div class="line"><b id="pyProgressText">0 من 20 درس مكتمل</b><span id="pyProgressPct">0%</span></div><div class="progress-track"><div class="progress-fill" id="pyProgress"></div></div></div><div class="head"><h2>دروس المسار</h2><button class="btn primary" onclick="openPythonQuiz()">📝 الاختبار النهائي</button></div><div class="lesson-list" id="pythonLessonGrid"></div><div class="notice">ملاحظة: الأمثلة البرمجية للقراءة والتجربة. تقدّمك يُحفظ محليًا على نفس المتصفح والجهاز في هذه النسخة التجريبية.</div></div></section>
+
+<section class="section" id="portal">
+  <div class="portal-welcome">
+    <small style="color:#8fe8e4">مساحة التعلم</small>
+    <h2>أهلاً بك في بوابة الطالب 🎓</h2>
+    <p>تابع الكورسات والدروس وتقدمك في التعلم من مكان واحد.</p>
+    <div class="field"><label for="studentDisplayName">اسم الطالب للعرض التجريبي</label><input id="studentDisplayName" placeholder="اكتب اسمك هنا" oninput="saveStudentDisplayName()"></div>
+  </div>
+  <div class="portal-grid">
+    <div class="portal-card"><small>الكورسات المتاحة</small><strong id="studentCourseCount">0</strong></div>
+    <div class="portal-card"><small>دروس Python المكتملة</small><strong id="studentDoneCount">0</strong></div>
+    <div class="portal-card"><small>نسبة تقدم Python</small><strong id="studentProgressPct">0%</strong></div>
+  </div>
+  <div class="panel">
+    <div class="head"><h2>الكورسات المتاحة</h2><button class="btn" onclick="refreshStudentPortal()">تحديث</button></div>
+    <div id="studentCourseList"></div>
+  </div>
+  <div class="notice">تنبيه: هذه بوابة عرض تجريبية. الاسم والتقدم يُحفظان على هذا المتصفح فقط. لا يوجد تسجيل دخول حقيقي أو حسابات مشتركة أو قاعدة بيانات بعد، لذلك لا تستخدم بيانات شخصية حساسة.</div>
+</section>
+
+
+<section class="section" id="accounts">
+  <div class="auth-shell">
+    <div class="learn-hero">
+      <small style="color:#8fe8e4">المرحلة السابعة · الحسابات الحقيقية والمزامنة</small>
+      <h2>🔐 تسجيل الطلاب وربط المنصة</h2>
+      <p>سجّل حسابًا بالبريد الإلكتروني، واحفظ ملف الطالب وتقدمه في قاعدة بيانات سحابية مشتركة بعد إعداد Firebase.</p>
+    </div>
+    <div class="auth-card">
+      <h3>1) إعداد Firebase</h3>
+      <div class="auth-status warn" id="backendStatus">لم يتم إعداد Firebase بعد. الحسابات السحابية غير مفعّلة.</div>
+      <div class="field"><label for="fbApiKey">Firebase API Key</label><input id="fbApiKey" autocomplete="off" value="AIzaSyBMyhCRHxunVYjkzrIB7H5Gb0NTTMj56Ug" placeholder="AIza..."></div>
+      <div class="field"><label for="fbAuthDomain">Auth Domain</label><input id="fbAuthDomain" value="abdalla-education.firebaseapp.com" placeholder="your-project.firebaseapp.com"></div>
+      <div class="field"><label for="fbProjectId">Project ID</label><input id="fbProjectId" value="abdalla-education" placeholder="your-project-id"></div>
+      <div class="field"><label for="fbAppId">App ID</label><input id="fbAppId" value="1:88781209792:web:f8ae7feec4d607ccbbed25" placeholder="1:...:web:..."></div>
+      <div class="auth-actions">
+        <button class="btn primary" onclick="configureFirebase()">حفظ الإعدادات والاتصال</button>
+        <button class="btn" onclick="clearFirebaseConfig()">مسح الإعدادات</button>
+      </div>
+      <p class="muted">تجد هذه القيم في Firebase Console ← Project settings ← Your apps. إعدادات Web العادية ليست كلمة مرور، لكن لا تشارك أي مفاتيح إدارية أو Service Account.</p>
+    </div>
+    <div class="auth-card">
+      <h3>2) حساب الطالب</h3>
+      <div class="auth-status" id="authStatus">لم يتم تسجيل الدخول.</div>
+      <div class="field"><label for="authName">اسم الطالب</label><input id="authName" placeholder="اسمك الظاهر"></div>
+      <div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" autocomplete="username" placeholder="name@example.com"></div>
+      <div class="field"><label for="authPassword">كلمة المرور</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="8 أحرف أو أكثر"></div>
+      <div class="auth-actions">
+        <button class="btn primary" onclick="registerCloudStudent()">إنشاء حساب طالب</button>
+        <button class="btn" onclick="loginCloudStudent()">تسجيل الدخول</button>
+        <button class="btn" onclick="logoutCloudStudent()">تسجيل الخروج</button>
+      </div>
+      <div class="auth-actions"><button class="btn" onclick="sendPasswordReset()">إرسال رابط إعادة تعيين كلمة المرور</button></div>
+      <p class="muted">التسجيل ينشئ دور student فقط. لا يمكن للطالب اختيار دور المدير من هذه الواجهة.</p>
+    </div>
+    <div class="auth-card">
+      <h3>3) مزامنة تقدم Python</h3>
+      <p class="muted">بعد تسجيل الدخول، يمكنك رفع تقدم هذا الجهاز إلى حسابك أو تحميل التقدم المحفوظ في حسابك.</p>
+      <div class="auth-actions">
+        <button class="btn primary" onclick="syncProgressToCloud()">رفع التقدم السحابي</button>
+        <button class="btn" onclick="loadProgressFromCloud()">تحميل التقدم السحابي</button>
+      </div>
+      <div class="auth-status" id="syncStatus">لا توجد عملية مزامنة حتى الآن.</div>
+    </div>
+    <div class="auth-card">
+      <h3>4) قواعد أمان Firestore المطلوبة</h3>
+      <p class="muted">انسخ القواعد التالية إلى Firestore → Rules قبل استخدام بيانات حقيقية. صلاحية المدير تعتمد على custom claim يضبطه مسؤول موثوق من بيئة خادم آمنة.</p>
+      <pre class="codebox" id="firestoreRules">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
+    function isAdmin() {
+      return signedIn() && request.auth.token.admin == true;
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid)
+        && request.resource.data.role == 'student';
+      allow update: if isOwner(uid)
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.role == 'student';
+      allow delete: if isAdmin();
+    }
+
+    match /progress/{uid} {
+      allow read, create, update: if isOwner(uid);
+      allow delete: if isOwner(uid) || isAdmin();
+    }
+
+    match /courses/{courseId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /lessons/{lessonId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}</pre>
+      <button class="btn" onclick="copyFirestoreRules()">نسخ قواعد الأمان</button>
+      <div class="notice">مهم: لا تمنح نفسك أو أي طالب صلاحية admin من واجهة الموقع. تعيين custom claims يتم فقط من خادم موثوق باستخدام Firebase Admin SDK، ولا تضع مفتاح Service Account داخل ملف HTML.</div>
+    </div>
+    <div class="auth-card">
+      <h3>الخطوات المتبقية للنشر</h3>
+      <ol style="line-height:2;color:var(--m)">
+        <li>أنشئ Firebase project وتطبيق Web.</li>
+        <li>فعّل Authentication → Email/Password.</li>
+        <li>أنشئ Firestore Database والصق قواعد الأمان أعلاه.</li>
+        <li>أدخل إعدادات Web في القسم الأول واضغط الاتصال.</li>
+        <li>اختبر إنشاء حساب طالب وتسجيل الدخول والمزامنة.</li>
+        <li>انشر الموقع على استضافة HTTPS، واطلب من شخص بالغ موثوق مراجعة إعدادات الأمان قبل استقبال طلاب حقيقيين.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="students"><h2>إدارة الطلاب</h2><div class="empty">سيتم تفعيل حسابات الطلاب وتسجيل الدخول بعد ربط قاعدة بيانات وخدمة مصادقة آمنة.</div></section>
+<section class="section" id="settings"><h2>إعدادات المنصة</h2><div class="panel"><div class="field"><label>اسم المنصة</label><input id="pname" value="منصة عبدالله التعليمية"></div><div class="field"><label>الوصف</label><textarea id="pdesc">طريقك لتعلّم البرمجة</textarea></div><button class="btn primary" onclick="saveSettings()">حفظ الإعدادات</button></div></section>
+<div class="notice">تنبيه أمان: تسجيل الطلاب والمزامنة السحابية في V7 يعملان بعد إعداد Firebase وقواعد Firestore. بقية إدارة المحتوى ما زالت محلية وليست لوحة مدير محمية؛ لا تنشرها كلوحة إدارة عامة قبل إضافة صلاحيات خادمية ومراجعة الأمان.</div>
+<div class="footer">© 2026 منصة عبدالله التعليمية · V7 · Cloud Accounts & Sync</div></main>
+<div class="modal" id="modal"><div class="box"><button class="close" onclick="closeM()">×</button><div id="mc"></div></div></div>
+<script>
+const starter=[{id:1,title:"أساسيات البرمجة",desc:"التفكير البرمجي والمتغيرات والشروط.",level:"مبتدئ"},{id:2,title:"HTML و CSS",desc:"بناء صفحات الويب وتنسيقها.",level:"مبتدئ"},{id:3,title:"JavaScript",desc:"إضافة التفاعل للمواقع.",level:"متوسط"},{id:4,title:"Python",desc:"تعلم بايثون من الصفر: المتغيرات والشروط والحلقات والدوال.",level:"مبتدئ"}];
+
+const pythonLessons = [
+{title:"1. ما هي Python؟ وتجهيز بيئة العمل",duration:"15 دقيقة",summary:"التعرف على لغة Python وكيفية تشغيل أول برنامج.",body:"Python لغة برمجة سهلة القراءة وتُستخدم في تطبيقات الويب وتحليل البيانات والأتمتة والذكاء الاصطناعي. ابدأ بمحرر Python أو بيئة تعليمية موثوقة، ثم أنشئ ملفًا امتداده .py.",code:'print("Hello, Python!")\nprint("أنا أتعلم البرمجة")',task:"شغّل المثال، ثم اطبع اسمك في سطر مستقل.",answer:'print("عبدالله")'},
+{title:"2. الطباعة والتعليقات",duration:"12 دقيقة",summary:"استخدام print وكتابة ملاحظات داخل الكود.",body:"الأمر print() يعرض البيانات على الشاشة. التعليق يبدأ بالرمز # ولا ينفذه البرنامج؛ نستخدمه لشرح فكرة الكود.",code:'# أول برنامج لي\nprint("أهلاً بك")  # رسالة ترحيب\nprint(2026)',task:"اكتب تعليقًا يشرح البرنامج، ثم اطبع جملة ترحيب ورقمًا.",answer:'# برنامج ترحيب\nprint("أهلاً بك في منصتي")\nprint(2026)'},
+{title:"3. المتغيرات وأنواع البيانات",duration:"20 دقيقة",summary:"تخزين النصوص والأعداد والقيم المنطقية.",body:"المتغير اسم يشير إلى قيمة. من الأنواع الشائعة: str للنص، int للعدد الصحيح، float للعدد العشري، وbool للقيمة True أو False. استخدم type() لمعرفة نوع القيمة.",code:'name = "Abdalla"\nage = 16\nprice = 12.5\nis_student = True\nprint(name, age)\nprint(type(price))',task:"أنشئ متغيرات لاسم مادة ودرجة ونجاح، ثم اطبعها.",answer:'subject = "Python"\nmark = 95\npassed = True\nprint(subject, mark, passed)'},
+{title:"4. استقبال البيانات input",duration:"18 دقيقة",summary:"جعل البرنامج يتفاعل مع المستخدم.",body:"الدالة input() تستقبل ما يكتبه المستخدم وتعيده كنص. لتحويله إلى عدد استخدم int() أو float() عند الحاجة.",code:'name = input("ما اسمك؟ ")\nprint("أهلاً يا", name)\nage = int(input("كم عمرك؟ "))\nprint(age + 1)',task:"اطلب من المستخدم رقمين، ثم اطبع مجموعهما.",answer:'a = float(input("الرقم الأول: "))\nb = float(input("الرقم الثاني: "))\nprint("المجموع =", a + b)'},
+{title:"5. العمليات الحسابية والمقارنات",duration:"20 دقيقة",summary:"الحساب والمقارنة والمنطق.",body:"العمليات الحسابية تشمل + و- و* و/ و// و% و**. المقارنات مثل == و!= و> و< تعطي True أو False. ويمكن جمع الشروط باستخدام and وor وnot.",code:'a = 10\nb = 3\nprint(a + b)\nprint(a // b)\nprint(a % b)\nprint(a > b)\nprint(a > 5 and b < 5)',task:"احسب مساحة مستطيل من الطول والعرض اللذين يدخلهما المستخدم.",answer:'length = float(input("الطول: "))\nwidth = float(input("العرض: "))\nprint("المساحة =", length * width)'},
+{title:"6. الشروط if وelif وelse",duration:"22 دقيقة",summary:"جعل البرنامج يختار بين أكثر من مسار.",body:"نستخدم if لاختبار شرط، وelif لإضافة احتمال آخر، وelse للحالة المتبقية. انتبه للمسافات البادئة لأنها جزء أساسي من بنية Python.",code:'mark = int(input("درجتك: "))\nif mark >= 85:\n    print("ممتاز")\nelif mark >= 50:\n    print("ناجح")\nelse:\n    print("حاول مرة أخرى")',task:"اكتب برنامجًا يحدد هل العدد موجب أم سالب أم يساوي صفرًا.",answer:'n = float(input("أدخل عددًا: "))\nif n > 0:\n    print("موجب")\nelif n < 0:\n    print("سالب")\nelse:\n    print("صفر")'},
+{title:"7. حلقات for",duration:"20 دقيقة",summary:"تكرار الأوامر على مجموعة أو نطاق أرقام.",body:"تُستخدم for للمرور على عناصر نص أو قائمة أو range(). تذكّر أن الحد الأخير في range لا يدخل ضمن الأرقام الناتجة.",code:'for number in range(1, 6):\n    print(number)\n\nfor letter in "Python":\n    print(letter)',task:"اطبع الأعداد الزوجية من 2 إلى 20 باستخدام for.",answer:'for n in range(2, 21, 2):\n    print(n)'},
+{title:"8. حلقات while والتحكم في التكرار",duration:"20 دقيقة",summary:"التكرار طالما الشرط صحيح.",body:"تستمر while في تنفيذ جسم الحلقة ما دام الشرط True. غيّر قيمة الشرط داخل الحلقة حتى لا تصبح حلقة لا نهائية. break يوقف الحلقة وcontinue ينتقل للتكرار التالي.",code:'count = 1\nwhile count <= 5:\n    print(count)\n    count += 1',task:"استخدم while لطباعة العد التنازلي من 5 إلى 1.",answer:'n = 5\nwhile n >= 1:\n    print(n)\n    n -= 1'},
+{title:"9. النصوص وطرق التعامل معها",duration:"22 دقيقة",summary:"تقطيع النصوص والبحث وتنسيقها.",body:"النصوص Strings يمكن الوصول إلى حروفها بالفهرس، وتقطيعها باستخدام slicing. من الدوال المفيدة lower() وupper() وstrip() وreplace() وsplit(). النصوص لا تتغير في مكانها؛ الدوال تعيد نصًا جديدًا.",code:'word = " Python "\nprint(word.strip())\nprint(word.lower())\nprint(word.strip()[0:3])\nname = "Abdalla"\nprint(f"Hello {name}")',task:"اطلب اسم المستخدم واطبع الاسم بحروف كبيرة داخل جملة ترحيب.",answer:'name = input("اسمك: ").strip()\nprint(f"مرحبًا {name.upper()}")'},
+{title:"10. القوائم Lists",duration:"25 دقيقة",summary:"تخزين عدة عناصر وتعديلها.",body:"القائمة تخزن عناصر مرتبة وقابلة للتعديل. نستخدم append للإضافة وremove للحذف وlen لمعرفة العدد، ويمكن المرور على عناصرها بحلقة.",code:'scores = [80, 95, 72]\nscores.append(88)\nprint(scores[0])\nprint(len(scores))\nfor score in scores:\n    print(score)',task:"أنشئ قائمة بثلاث مواد، أضف مادة رابعة، ثم اطبع العناصر.",answer:'subjects = ["Arabic", "Math", "Science"]\nsubjects.append("Python")\nfor subject in subjects:\n    print(subject)'},
+{title:"11. Tuples وSets",duration:"18 دقيقة",summary:"المجموعات الثابتة والمجموعات ذات العناصر الفريدة.",body:"Tuple تشبه القائمة لكنها غير قابلة للتعديل بعد إنشائها. Set تخزن عناصر فريدة ولا تعتمد على ترتيب ثابت، وهي مفيدة لإزالة التكرار واختبار العضوية.",code:'point = (10, 20)\nprint(point[0])\n\nnumbers = {1, 2, 2, 3}\nprint(numbers)\nnumbers.add(4)\nprint(3 in numbers)',task:"حوّل القائمة [1, 2, 2, 3, 3, 4] إلى set لإزالة التكرار.",answer:'numbers = [1, 2, 2, 3, 3, 4]\nunique_numbers = set(numbers)\nprint(unique_numbers)'},
+{title:"12. القواميس Dictionaries",duration:"22 دقيقة",summary:"تخزين البيانات في صورة مفتاح وقيمة.",body:"القاموس يخزن أزواجًا من key وvalue. نصل للقيمة باستخدام المفتاح، ويمكن إضافة مفاتيح أو تعديلها. get() طريقة آمنة نسبيًا للقراءة عند احتمال غياب المفتاح.",code:'student = {\n    "name": "Abdalla",\n    "grade": 95\n}\nprint(student["name"])\nstudent["city"] = "Mit Ghamr"\nprint(student.get("grade"))',task:"أنشئ قاموسًا لكتاب يحتوي على العنوان والسعر، ثم اطبع العنوان.",answer:'book = {"title": "Learn Python", "price": 150}\nprint(book["title"])'},
+{title:"13. الدوال Functions",duration:"25 دقيقة",summary:"تقسيم البرنامج إلى أجزاء قابلة لإعادة الاستخدام.",body:"نعرّف الدالة باستخدام def. يمكنها استقبال معاملات وإرجاع نتيجة باستخدام return. اجعل اسم الدالة واضحًا، واجعل كل دالة تؤدي مهمة محددة.",code:'def add(a, b):\n    return a + b\n\nresult = add(5, 7)\nprint(result)',task:"اكتب دالة تستقبل رقمًا وتعيد مربعه.",answer:'def square(number):\n    return number ** 2\n\nprint(square(6))'},
+{title:"14. الوحدات Modules",duration:"18 دقيقة",summary:"استخدام مكتبات Python الجاهزة.",body:"الوحدة ملف أو مكتبة تحتوي أدوات يمكن استيرادها باستخدام import. مثال: مكتبة math للعمليات الرياضية وrandom للاختيار العشوائي. راجع توثيق المكتبة لمعرفة وظائفها.",code:'import math\nimport random\n\nprint(math.sqrt(81))\nprint(random.randint(1, 10))',task:"استورد math واطبع قيمة 5 مرفوعة للقوة 3 باستخدام pow.",answer:'import math\nprint(math.pow(5, 3))'},
+{title:"15. التعامل مع الملفات",duration:"25 دقيقة",summary:"قراءة الملفات وكتابتها بطريقة آمنة.",body:"يمكن فتح ملف باستخدام open. يفضّل استخدام with لأنه يغلق الملف تلقائيًا بعد انتهاء العمل. الوضع w للكتابة وقد يستبدل المحتوى القديم، وa للإضافة، وr للقراءة.",code:'with open("notes.txt", "w", encoding="utf-8") as file:\n    file.write("أتعلم Python")\n\nwith open("notes.txt", "r", encoding="utf-8") as file:\n    print(file.read())',task:"اكتب جملة في ملف ثم افتح الملف واقرأ محتواه.",answer:'with open("my_file.txt", "w", encoding="utf-8") as f:\n    f.write("Hello Python")\nwith open("my_file.txt", "r", encoding="utf-8") as f:\n    print(f.read())'},
+{title:"16. معالجة الأخطاء Exceptions",duration:"22 دقيقة",summary:"التعامل مع الأخطاء المتوقعة دون توقف مفاجئ.",body:"نستخدم try لتجربة جزء قد يسبب خطأ، وexcept لمعالجة نوع الخطأ المتوقع. لا تستخدم except عامًا لإخفاء كل المشكلات؛ حدّد نوع الخطأ كلما أمكن.",code:'try:\n    age = int(input("عمرك: "))\n    print(age)\nexcept ValueError:\n    print("من فضلك أدخل رقمًا صحيحًا")',task:"اطلب رقمًا من المستخدم وتعامل مع إدخال نص بدلًا من رقم.",answer:'try:\n    number = float(input("أدخل رقمًا: "))\n    print(number * 2)\nexcept ValueError:\n    print("الإدخال غير صحيح")'},
+{title:"17. البرمجة كائنية التوجه OOP",duration:"30 دقيقة",summary:"إنشاء Classes وObjects وفهم الخصائص والدوال.",body:"Class قالب لإنشاء كائنات Objects. الدالة __init__ تجهز خصائص الكائن عند إنشائه، وself تشير إلى الكائن الحالي. ابدأ بفهم الكائنات قبل التوسع في الوراثة والتعدد الشكلي.",code:'class Student:\n    def __init__(self, name, grade):\n        self.name = name\n        self.grade = grade\n\n    def introduce(self):\n        print(f"أنا {self.name} ودرجتي {self.grade}")\n\nstudent = Student("Abdalla", 95)\nstudent.introduce()',task:"أنشئ class باسم Book له title وprice ودالة تعرض بيانات الكتاب.",answer:'class Book:\n    def __init__(self, title, price):\n        self.title = title\n        self.price = price\n\n    def show(self):\n        print(self.title, self.price)\n\nbook = Book("Python", 150)\nbook.show()'},
+{title:"18. مشروع تطبيقي: آلة حاسبة",duration:"30 دقيقة",summary:"تجميع الإدخال والشروط والدوال في برنامج واحد.",body:"في هذا المشروع ستستقبل رقمين وعملية حسابية، ثم تستخدم الشروط لاختيار العملية. قسّم الحل إلى دالة حتى يكون الكود منظمًا.",code:'def calculate(a, b, operation):\n    if operation == "+":\n        return a + b\n    elif operation == "-":\n        return a - b\n    elif operation == "*":\n        return a * b\n    elif operation == "/" and b != 0:\n        return a / b\n    return "عملية غير صالحة"\n\nprint(calculate(10, 5, "+"))',task:"أضف عملية القسمة مع منع القسمة على صفر، ثم جرّب العمليات الأربع.",answer:"جرّب استدعاء الدالة بالقيم التالية:\ncalculate(10, 2, \"+\")\ncalculate(10, 2, \"-\")\ncalculate(10, 2, \"*\")\ncalculate(10, 0, \"/\")"},
+{title:"19. مشروع تطبيقي: قائمة مهام",duration:"35 دقيقة",summary:"استخدام القوائم والحلقات والدوال لبناء برنامج صغير.",body:"أنشئ قائمة فارغة للمهام. اعرض قائمة خيارات للمستخدم: إضافة مهمة، عرض المهام، أو خروج. استخدم while لتكرار القائمة وif لاختيار الأمر.",code:'tasks = []\nwhile True:\n    choice = input("1 إضافة | 2 عرض | 3 خروج: ")\n    if choice == "1":\n        tasks.append(input("اكتب المهمة: "))\n    elif choice == "2":\n        for i, task in enumerate(tasks, start=1):\n            print(i, task)\n    elif choice == "3":\n        break\n    else:\n        print("اختيار غير صحيح")',task:"طوّر المشروع بإضافة إمكانية حذف مهمة برقمها.",answer:"استخدم tasks.pop(index) بعد التأكد أن الرقم يقع ضمن حدود القائمة، واطرح 1 من رقم المهمة لأن فهرسة القائمة تبدأ من صفر."},
+{title:"20. مراجعة وخطواتك التالية",duration:"20 دقيقة",summary:"مراجعة أهم المفاهيم والاستعداد لمشاريع أكبر.",body:"أصبحت تعرف أساسيات بناء برامج Python: المتغيرات، الشروط، الحلقات، هياكل البيانات، الدوال، الملفات، الأخطاء والكائنات. الخطوة التالية هي التدريب المستمر وبناء مشاريع صغيرة ثم دراسة مكتبات متخصصة حسب هدفك.",code:'# مثال يجمع الدوال والقوائم\n\ndef average(values):\n    return sum(values) / len(values)\n\nmarks = [80, 90, 100]\nprint(average(marks))',task:"اكتب برنامجًا يحسب متوسط مجموعة درجات ويعرض أعلى درجة وأقل درجة.",answer:'marks = [80, 90, 100]\nprint("المتوسط:", sum(marks) / len(marks))\nprint("الأعلى:", max(marks))\nprint("الأقل:", min(marks))'}
+];
+
+const pythonQuiz = [
+{q:"ما الأمر المستخدم لعرض نص على الشاشة؟",a:["input()","print()","type()"],correct:1,why:"print() تعرض قيمة أو نصًا على الشاشة."},
+{q:"ما نوع القيمة 3.14؟",a:["int","str","float"],correct:2,why:"الأعداد التي تحتوي على جزء عشري نوعها float."},
+{q:"ما الدالة التي تستقبل إدخال المستخدم؟",a:["input()","write()","show()"],correct:0,why:"input() تقرأ ما يكتبه المستخدم وتعيده كنص."},
+{q:"ما ناتج 10 % 3؟",a:["3","1","0"],correct:1,why:"% تعيد باقي القسمة، وباقي 10 على 3 هو 1."},
+{q:"أي كلمة تبدأ تعريف دالة؟",a:["class","for","def"],correct:2,why:"نستخدم def لتعريف دالة."},
+{q:"أي تركيب يستخدم لاتخاذ قرار؟",a:["if","import","return"],correct:0,why:"if تختبر شرطًا وتنفذ المسار المناسب."},
+{q:"ما الطريقة الشائعة لإضافة عنصر إلى قائمة؟",a:["append()","addfile()","insertText()"],correct:0,why:"append() تضيف عنصرًا إلى نهاية القائمة."},
+{q:"ما فائدة with open؟",a:["إنشاء حلقة","إدارة فتح الملف وإغلاقه","تعريف كلاس"],correct:1,why:"with يتولى إغلاق الملف تلقائيًا بعد انتهاء الكتلة."},
+{q:"ما الكلمة المستخدمة لإنشاء Class؟",a:["object","def","class"],correct:2,why:"class تبدأ تعريف قالب الكائنات."},
+{q:"ما ناتج len([4, 7, 9])؟",a:["2","3","4"],correct:1,why:"القائمة تحتوي على ثلاثة عناصر."}
+];
+
+
+
+function showBackendSetup(){
+  openM(`<h3>خطوات تفعيل الحسابات الحقيقية</h3>
+  <p>1. افتح <b>console.firebase.google.com</b> وأنشئ مشروعًا باسم منصة عبدالله التعليمية.</p>
+  <p>2. أضف تطبيق Web وانسخ إعدادات Firebase.</p>
+  <p>3. فعّل Authentication ثم Email/Password.</p>
+  <p>4. أنشئ Firestore Database.</p>
+  <p>5. أرسل إعدادات المشروع غير السرية (Firebase web config) لنربطها بالواجهة، ثم نجهز قواعد الأمان.</p>
+  <div class="notice">لا ترسل كلمات مرور أو مفاتيح خدمة إدارية (Service Account). ولا تنشر قاعدة البيانات قبل ضبط قواعد الأمان.</div>
+  <button class="btn primary" onclick="closeM()">حسنًا</button>`);
+}
+
+function saveStudentDisplayName(){
+  const input=document.getElementById("studentDisplayName");
+  if(input)localStorage.setItem("abdalla_student_display_name",input.value);
+}
+function refreshStudentPortal(){
+  const nameInput=document.getElementById("studentDisplayName");
+  if(nameInput)nameInput.value=get("abdalla_student_display_name","");
+  const count=document.getElementById("studentCourseCount");
+  const doneCount=document.getElementById("studentDoneCount");
+  const pct=document.getElementById("studentProgressPct");
+  const list=document.getElementById("studentCourseList");
+  if(count)count.textContent=courses.length;
+  const done=getPythonDone();
+  if(doneCount)doneCount.textContent=done.length;
+  if(pct)pct.textContent=Math.round(done.length/pythonLessons.length*100)+"%";
+  if(list){
+    list.innerHTML=courses.map(c=>{
+      const isPython=c.title.toLowerCase()==="python";
+      const lessonCount=isPython?pythonLessons.length:lessons.filter(l=>l.course==c.id).length;
+      return `<article class="portal-course"><div class="actions"><b>${safe(c.title)}</b><small>${safe(c.level||"")}</small></div><p>${safe(c.desc||"")}</p><small>${lessonCount} درس</small><div style="margin-top:12px"><button class="btn primary" onclick="${isPython?"openStudentPython()":"alert('محتوى هذا الكورس سيُضاف في مرحلة قادمة.')"}">دخول الكورس</button></div></article>`;
+    }).join("")||'<div class="empty">لا توجد كورسات متاحة حاليًا.</div>';
+  }
+}
+function openStudentPython(){
+  document.querySelectorAll(".tab,.section").forEach(x=>x.classList.remove("active"));
+  const learnTab=document.querySelector('.tab[data-tab="learn"]');
+  if(learnTab)learnTab.classList.add("active");
+  const learnSection=document.getElementById("learn");
+  if(learnSection)learnSection.classList.add("active");
+  renderPythonLessons();
+}
+
+function ensurePythonCurriculum(){
+  const known = new Set(lessons.filter(l=>l.course===4).map(l=>l.title));
+  pythonLessons.forEach((lesson,i)=>{
+    if(!known.has(lesson.title)) lessons.push({id:400+i,course:4,title:lesson.title,duration:lesson.duration,url:""});
+  });
+  localStorage.setItem("abdalla_lessons",JSON.stringify(lessons));
+}
+function getPythonDone(){return get("abdalla_python_done",[])}
+function updatePythonProgress(){
+  const done=getPythonDone(), total=pythonLessons.length, pct=Math.round(done.length/total*100);
+  const t=document.getElementById("pyProgressText"),p=document.getElementById("pyProgressPct"),bar=document.getElementById("pyProgress");
+  if(t)t.textContent=`${done.length} من ${total} درس مكتمل`;
+  if(p)p.textContent=pct+"%";
+  if(bar)bar.style.width=pct+"%";
+}
+function renderPythonLessons(){
+  const done=getPythonDone(),grid=document.getElementById("pythonLessonGrid");
+  if(!grid)return;
+  grid.innerHTML=pythonLessons.map((l,i)=>`<article class="lesson-card"><small>الدرس ${i+1} · ${safe(l.duration)}</small><h3>${safe(l.title)}</h3><p>${safe(l.summary)}</p><div class="actions"><span class="muted">${done.includes(i)?"✓ مكتمل":"لم يكتمل بعد"}</span><button class="btn primary" onclick="openPythonLesson(${i})">ابدأ الدرس</button></div></article>`).join("");
+  updatePythonProgress();
+}
+function openPythonLesson(i){
+  const l=pythonLessons[i],done=getPythonDone();
+  openM(`<div class="lesson-content"><small>مسار Python · ${i+1} من ${pythonLessons.length}</small><h2>${safe(l.title)}</h2><p>${safe(l.body)}</p><h3>مثال عملي</h3><pre class="codebox">${safe(l.code)}</pre><h3>تدريب عليك</h3><div class="task">${safe(l.task)}<div style="margin-top:10px"><button class="btn" onclick="document.getElementById('pyAnswer').classList.toggle('show')">إظهار نموذج الحل</button></div><div class="answer" id="pyAnswer"><pre class="codebox">${safe(l.answer)}</pre></div></div><div class="actions" style="margin-top:16px"><button class="btn" onclick="closeM()">رجوع للدروس</button><button class="btn primary" onclick="markPythonDone(${i})">${done.includes(i)?"إلغاء إكمال الدرس":"تم إكمال الدرس ✓"}</button></div></div>`);
+}
+function markPythonDone(i){
+  let done=getPythonDone();
+  done=done.includes(i)?done.filter(x=>x!==i):[...done,i];
+  localStorage.setItem("abdalla_python_done",JSON.stringify(done));
+  closeM();renderPythonLessons();
+}
+function openPythonQuiz(){
+  const questions=pythonQuiz.map((q,i)=>`<div class="quiz-q"><b>${i+1}. ${safe(q.q)}</b>${q.a.map((a,j)=>`<label><input type="radio" name="pq${i}" value="${j}"> ${safe(a)}</label>`).join("")}<div class="muted" id="pwhy${i}" style="display:none;margin-top:7px"></div></div>`).join("");
+  openM(`<h2>الاختبار النهائي في Python</h2><p class="muted">10 أسئلة اختيار من متعدد. اختر إجابة واحدة لكل سؤال ثم اضغط تصحيح.</p><form onsubmit="gradePythonQuiz(event)">${questions}<button class="btn primary" style="margin-top:16px">تصحيح الاختبار</button></form><div id="pyQuizResult"></div>`);
+}
+function gradePythonQuiz(e){
+  e.preventDefault();let score=0;
+  pythonQuiz.forEach((q,i)=>{
+    const selected=document.querySelector(`input[name="pq${i}"]:checked`);
+    const why=document.getElementById("pwhy"+i);
+    if(selected&&Number(selected.value)===q.correct)score++;
+    if(why){why.style.display="block";why.textContent=(selected&&Number(selected.value)===q.correct?"✓ إجابة صحيحة. ":"✗ الإجابة الصحيحة: "+q.a[q.correct]+". ")+q.why;}
+  });
+  const result=document.getElementById("pyQuizResult");
+  if(result)result.innerHTML=`<div class="task" style="margin-top:15px"><h3>نتيجتك: ${score} من ${pythonQuiz.length}</h3><p>${score>=8?"ممتاز! أنت مستعد لمشاريع أكثر تحديًا.":score>=5?"جيد! راجع الدروس التي تحتاج إلى تقوية.":"لا بأس، راجع الدروس وحاول مرة أخرى."}</p></div>`;
+}
+
+function get(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+let courses=get("abdalla_courses",starter),lessons=get("abdalla_lessons",[{id:11,course:1,title:"يعني إيه برمجة؟",duration:"8 دقائق",url:""},{id:12,course:2,title:"مقدمة في HTML",duration:"10 دقائق",url:""},{id:13,course:4,title:"مقدمة في Python",duration:"12 دقيقة",url:""}]);
+if(!courses.some(c=>c.title.toLowerCase()==="python"))courses.push({id:4,title:"Python",desc:"تعلم بايثون من الصفر: المتغيرات والشروط والحلقات والدوال.",level:"مبتدئ"});
+if(!lessons.some(l=>l.course===4))lessons.push({id:13,course:4,title:"مقدمة في Python",duration:"12 دقيقة",url:""});
+function safe(s){return String(s||"").replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
+function save(){localStorage.setItem("abdalla_courses",JSON.stringify(courses));localStorage.setItem("abdalla_lessons",JSON.stringify(lessons));render()}
+function render(){cc.textContent=courses.length;lc.textContent=lessons.length;courseGrid.innerHTML=courses.map(c=>`<article class="course"><small>${safe(c.level)}</small><h3>${safe(c.title)}</h3><p>${safe(c.desc)}</p><small>${lessons.filter(l=>l.course==c.id).length} دروس</small><div class="actions"><button class="btn" onclick="courseForm(${c.id})">تعديل</button><button class="btn danger" onclick="delCourse(${c.id})">حذف</button></div></article>`).join("")||'<div class="empty">لا توجد كورسات. أضف أول كورس.</div>';lessonGrid.innerHTML=lessons.map(l=>`<div class="line"><div><b>${safe(l.title)}</b><br><small>${safe((courses.find(c=>c.id==l.course)||{}).title||"كورس غير موجود")} · ${safe(l.duration)}</small></div><div class="actions"><button class="btn" onclick="lessonForm(${l.id})">تعديل</button><button class="btn danger" onclick="delLesson(${l.id})">حذف</button></div></div>`).join("")||'<div class="empty">لا توجد دروس بعد.</div>'}
+function openM(s){mc.innerHTML=s;modal.classList.add("show")}function closeM(){modal.classList.remove("show")}
+function courseForm(id){let c=courses.find(x=>x.id===id)||{title:"",desc:"",level:"مبتدئ"};openM(`<h3>${id?"تعديل كورس":"إضافة كورس جديد"}</h3><form onsubmit="saveCourse(event,${id||0})"><div class="field"><label>اسم الكورس</label><input name="title" required value="${safe(c.title)}"></div><div class="field"><label>وصف الكورس</label><textarea name="desc" required>${safe(c.desc)}</textarea></div><div class="field"><label>المستوى</label><select name="level"><option ${c.level==="مبتدئ"?"selected":""}>مبتدئ</option><option ${c.level==="متوسط"?"selected":""}>متوسط</option><option ${c.level==="متقدم"?"selected":""}>متقدم</option></select></div><button class="btn primary">حفظ الكورس</button></form>`)}
+function saveCourse(e,id){e.preventDefault();let f=new FormData(e.target),v={title:f.get("title").trim(),desc:f.get("desc").trim(),level:f.get("level")};if(id)Object.assign(courses.find(c=>c.id===id),v);else courses.push({id:Date.now(),...v});save();closeM()}
+function delCourse(id){if(!confirm("حذف الكورس وكل دروسه؟"))return;courses=courses.filter(c=>c.id!==id);lessons=lessons.filter(l=>l.course!==id);save()}
+function lessonForm(id){if(!courses.length){alert("أضف كورسًا أولًا");return}let l=lessons.find(x=>x.id===id)||{title:"",course:courses[0].id,duration:"10 دقائق",url:""};openM(`<h3>${id?"تعديل درس":"إضافة درس جديد"}</h3><form onsubmit="saveLesson(event,${id||0})"><div class="field"><label>عنوان الدرس</label><input name="title" required value="${safe(l.title)}"></div><div class="field"><label>الكورس</label><select name="course">${courses.map(c=>`<option value="${c.id}" ${c.id==l.course?"selected":""}>${safe(c.title)}</option>`).join("")}</select></div><div class="field"><label>مدة الدرس</label><input name="duration" value="${safe(l.duration)}"></div><div class="field"><label>رابط فيديو اختياري</label><input name="url" type="url" value="${safe(l.url)}" placeholder="https://..."></div><button class="btn primary">حفظ الدرس</button></form>`)}
+function saveLesson(e,id){e.preventDefault();let f=new FormData(e.target),v={title:f.get("title").trim(),course:+f.get("course"),duration:f.get("duration"),url:f.get("url")};if(id)Object.assign(lessons.find(l=>l.id===id),v);else lessons.push({id:Date.now(),...v});save();closeM()}
+function delLesson(id){if(!confirm("حذف هذا الدرس؟"))return;lessons=lessons.filter(l=>l.id!==id);save()}
+function preview(){openM("<h3>معاينة الكورسات</h3>"+courses.map(c=>`<p>📘 ${safe(c.title)} — ${safe(c.level)}</p>`).join(""))}
+function info(){openM("<h3>👑 مدير المنصة</h3><p>المسؤول: عبدالله متولي</p><p class='muted'>هذا تعريف تجريبي، وليس حساب دخول فعليًا.</p>")}
+function saveSettings(){localStorage.setItem("abdalla_name",pname.value);localStorage.setItem("abdalla_desc",pdesc.value);alert("تم الحفظ على هذا المتصفح")}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab,.section").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.tab).classList.add("active")});
+ensurePythonCurriculum();
+render();
+renderPythonLessons();
+refreshStudentPortal();
+</script>
+
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+import {
+  getFirestore, doc, setDoc, getDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+let cloudApp = null, cloudAuth = null, cloudDb = null, currentCloudUser = null;
+const ABDALLA_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBMyhCRHxunVYjkzrIB7H5Gb0NTTMj56Ug",
+  authDomain: "abdalla-education.firebaseapp.com",
+  projectId: "abdalla-education",
+  storageBucket: "abdalla-education.firebasestorage.app",
+  messagingSenderId: "88781209792",
+  appId: "1:88781209792:web:f8ae7feec4d607ccbbed25",
+  measurementId: "G-MQN0RBB0RM"
+};
+const configKeys = ["apiKey","authDomain","projectId","appId"];
+function readConfig(){
+  return {
+    apiKey: document.getElementById("fbApiKey").value.trim(),
+    authDomain: document.getElementById("fbAuthDomain").value.trim(),
+    projectId: document.getElementById("fbProjectId").value.trim(),
+    appId: document.getElementById("fbAppId").value.trim()
+  };
+}
+function status(id, msg, ok=false){
+  const el=document.getElementById(id); if(!el)return;
+  el.textContent=msg; el.className="auth-status "+(ok?"ok":"warn");
+}
+function restoreConfig(){
+  try{
+    const c=JSON.parse(localStorage.getItem("abdalla_firebase_web_config")||"null");
+    if(c) {
+      document.getElementById("fbApiKey").value=c.apiKey||"";
+      document.getElementById("fbAuthDomain").value=c.authDomain||"";
+      document.getElementById("fbProjectId").value=c.projectId||"";
+      document.getElementById("fbAppId").value=c.appId||"";
+    }
+  }catch(e){}
+}
+async function connect(config){
+  if(!configKeys.every(k=>config[k])) throw new Error("أكمل حقول إعداد Firebase الأربعة.");
+  cloudApp=getApps().length?getApps()[0]:initializeApp(config);
+  cloudAuth=getAuth(cloudApp); cloudDb=getFirestore(cloudApp);
+  onAuthStateChanged(cloudAuth, user=>{
+    currentCloudUser=user;
+    status("authStatus", user ? `تم تسجيل الدخول: ${user.email}` : "لم يتم تسجيل الدخول.", !!user);
+    status("backendStatus", "تم الاتصال بإعدادات Firebase. خدمة المصادقة وقاعدة البيانات جاهزتان للاختبار.", true);
+  });
+}
+window.configureFirebase=async()=>{
+  try{
+    const c=readConfig(); await connect(c);
+    localStorage.setItem("abdalla_firebase_web_config",JSON.stringify(c));
+    status("backendStatus","تم الاتصال بـ Firebase وحفظ إعدادات المشروع على هذا المتصفح.",true);
+  }catch(e){status("backendStatus",e.message||"تعذر الاتصال. راجع الإعدادات والإنترنت.");}
+};
+window.clearFirebaseConfig=()=>{
+  localStorage.removeItem("abdalla_firebase_web_config");
+  ["fbApiKey","fbAuthDomain","fbProjectId","fbAppId"].forEach(id=>document.getElementById(id).value="");
+  cloudApp=cloudAuth=cloudDb=null;
+  status("backendStatus","تم مسح الإعدادات من هذا المتصفح.");
+};
+function ensureConnected(){if(!cloudAuth||!cloudDb)throw new Error("اضبط Firebase أولًا واضغط حفظ الإعدادات والاتصال.");}
+window.registerCloudStudent=async()=>{
+  try{
+    ensureConnected();
+    const name=document.getElementById("authName").value.trim();
+    const email=document.getElementById("authEmail").value.trim();
+    const password=document.getElementById("authPassword").value;
+    if(!name)throw new Error("اكتب اسم الطالب.");
+    if(password.length<8)throw new Error("كلمة المرور يجب ألا تقل عن 8 أحرف.");
+    const cred=await createUserWithEmailAndPassword(cloudAuth,email,password);
+    await updateProfile(cred.user,{displayName:name});
+    await setDoc(doc(cloudDb,"users",cred.user.uid),{
+      uid:cred.user.uid, displayName:name, email:cred.user.email,
+      role:"student", createdAt:serverTimestamp()
+    });
+    status("authStatus","تم إنشاء حساب الطالب وتسجيل الدخول بنجاح.",true);
+  }catch(e){status("authStatus",e.message||"تعذر إنشاء الحساب.");}
+};
+window.loginCloudStudent=async()=>{
+  try{
+    ensureConnected();
+    await signInWithEmailAndPassword(cloudAuth,
+      document.getElementById("authEmail").value.trim(),
+      document.getElementById("authPassword").value);
+    status("authStatus","تم تسجيل الدخول بنجاح.",true);
+  }catch(e){status("authStatus",e.message||"تعذر تسجيل الدخول.");}
+};
+window.logoutCloudStudent=async()=>{
+  try{ensureConnected();await signOut(cloudAuth);status("authStatus","تم تسجيل الخروج.",true);}
+  catch(e){status("authStatus",e.message||"تعذر تسجيل الخروج.");}
+};
+window.sendPasswordReset=async()=>{
+  try{ensureConnected();const email=document.getElementById("authEmail").value.trim();if(!email)throw new Error("اكتب البريد الإلكتروني أولًا.");await sendPasswordResetEmail(cloudAuth,email);status("authStatus","تم إرسال رابط إعادة تعيين كلمة المرور إلى البريد.",true);}
+  catch(e){status("authStatus",e.message||"تعذر إرسال الرابط.");}
+};
+window.syncProgressToCloud=async()=>{
+  try{
+    ensureConnected();if(!currentCloudUser)throw new Error("سجّل الدخول أولًا.");
+    const done=JSON.parse(localStorage.getItem("abdalla_python_done")||"[]");
+    await setDoc(doc(cloudDb,"progress",currentCloudUser.uid),{
+      pythonDone:done, updatedAt:serverTimestamp()
+    },{merge:true});
+    status("syncStatus",`تم رفع تقدمك: ${done.length} من 20 درسًا.`,true);
+  }catch(e){status("syncStatus",e.message||"فشلت المزامنة.");}
+};
+window.loadProgressFromCloud=async()=>{
+  try{
+    ensureConnected();if(!currentCloudUser)throw new Error("سجّل الدخول أولًا.");
+    const snap=await getDoc(doc(cloudDb,"progress",currentCloudUser.uid));
+    if(!snap.exists())throw new Error("لا يوجد تقدم سحابي محفوظ لهذا الحساب بعد.");
+    const data=snap.data(), done=Array.isArray(data.pythonDone)?data.pythonDone.filter(n=>Number.isInteger(n)&&n>=0&&n<20):[];
+    localStorage.setItem("abdalla_python_done",JSON.stringify(done));
+    if(typeof renderPythonLessons==="function")renderPythonLessons();
+    if(typeof refreshStudentPortal==="function")refreshStudentPortal();
+    status("syncStatus",`تم تحميل تقدم الحساب: ${done.length} من 20 درسًا.`,true);
+  }catch(e){status("syncStatus",e.message||"تعذر تحميل التقدم.");}
+};
+window.copyFirestoreRules=()=>{
+  const text=document.getElementById("firestoreRules").textContent;
+  if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>alert("تم نسخ قواعد الأمان.")).catch(()=>alert("تعذر النسخ تلقائيًا؛ حدد النص وانسخه."));
+  else alert("المتصفح لا يدعم النسخ التلقائي؛ حدد النص وانسخه.");
+};
+// إعدادات Firebase العامة مضمّنة في الموقع حتى لا يحتاج كل طالب لإدخالها على جهازه.
+Object.entries(ABDALLA_FIREBASE_CONFIG).forEach(([key,value])=>{
+  const field={apiKey:"fbApiKey",authDomain:"fbAuthDomain",projectId:"fbProjectId",appId:"fbAppId"}[key];
+  if(field) document.getElementById(field).value=value;
+});
+try{
+  await connect(ABDALLA_FIREBASE_CONFIG);
+  status("backendStatus","تم تحميل إعدادات Firebase تلقائيًا. جرّب إنشاء حساب أو تسجيل الدخول.",true);
+}catch(e){status("backendStatus",e.message||"تعذر الاتصال بـ Firebase. راجع إعدادات Authentication وFirestore.");}
+</script>
+
+</html>
